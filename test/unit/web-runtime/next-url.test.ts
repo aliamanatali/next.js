@@ -326,6 +326,26 @@ it('correctly parses a prefetch index url', async () => {
   expect(url.pathname).toEqual('/')
 })
 
+it('correctly parses a prefetch url of pages under /index', async () => {
+  const url = new NextURL(
+    '/_next/data/development/index/index.json',
+    'http://127.0.0.1:3000'
+  )
+  expect(url.pathname).toEqual('/index')
+  expect(String(url)).toEqual(
+    'http://localhost:3000/_next/data/development/index/index.json'
+  )
+
+  const nested = new NextURL(
+    '/_next/data/development/index/index/user.json',
+    'http://127.0.0.1:3000'
+  )
+  expect(nested.pathname).toEqual('/index/user')
+  expect(String(nested)).toEqual(
+    'http://localhost:3000/_next/data/development/index/index/user.json'
+  )
+})
+
 it('correctly parses a prefetch url with i18n', async () => {
   const url = new NextURL(
     '/_next/data/development/en/hello.json',
@@ -375,6 +395,17 @@ it('allows to update the pathname to the root path for a prefetch url', async ()
   url.pathname = '/'
   expect(String(url)).toEqual(
     'http://localhost:3000/_next/data/development/index.json'
+  )
+})
+
+it('allows to update the pathname to /index for a prefetch url', async () => {
+  const url = new NextURL(
+    '/_next/data/development/hello.json',
+    'http://127.0.0.1:3000'
+  )
+  url.pathname = '/index'
+  expect(String(url)).toEqual(
+    'http://localhost:3000/_next/data/development/index/index.json'
   )
 })
 

@@ -1,6 +1,7 @@
 import { normalizeLocalePath } from '../../i18n/normalize-locale-path'
 import { removePathPrefix } from './remove-path-prefix'
 import { pathHasPrefix } from './path-has-prefix'
+import getRouteFromAssetPath from './get-route-from-asset-path'
 import type { I18NProvider } from '../../../../server/lib/i18n-provider'
 
 export interface NextPathnameInfo {
@@ -77,8 +78,7 @@ export function getNextPathnameInfo(
 
     const buildId = paths[0]
     info.buildId = buildId
-    pathnameNoDataPrefix =
-      paths[1] !== 'index' ? `/${paths.slice(1).join('/')}` : '/'
+    pathnameNoDataPrefix = getRouteFromAssetPath(`/${paths.slice(1).join('/')}`)
 
     // update pathname with normalized if enabled although
     // we use normalized to populate locale info still

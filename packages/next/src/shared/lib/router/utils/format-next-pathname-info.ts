@@ -3,6 +3,7 @@ import { removeTrailingSlash } from './remove-trailing-slash'
 import { addPathPrefix } from './add-path-prefix'
 import { addPathSuffix } from './add-path-suffix'
 import { addLocale } from './add-locale'
+import getAssetPathFromRoute from './get-asset-path-from-route'
 
 interface ExtendedInfo extends NextPathnameInfo {
   defaultLocale?: string
@@ -22,9 +23,9 @@ export function formatNextPathnameInfo(info: ExtendedInfo) {
   }
 
   if (info.buildId) {
-    pathname = addPathSuffix(
-      addPathPrefix(pathname, `/_next/data/${info.buildId}`),
-      info.pathname === '/' ? 'index.json' : '.json'
+    pathname = addPathPrefix(
+      getAssetPathFromRoute(pathname, '.json'),
+      `/_next/data/${info.buildId}`
     )
   }
 

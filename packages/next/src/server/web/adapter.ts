@@ -210,10 +210,6 @@ export async function adapter(
   const isNextDataRequest = requestHeaders.has('x-nextjs-data')
   const isRSCRequest = isRSCRequestHeader(requestHeaders.get(RSC_HEADER))
 
-  if (isNextDataRequest && requestURL.pathname === '/index') {
-    requestURL.pathname = '/'
-  }
-
   const flightHeaders = new Map()
 
   // Headers should only be stripped for middleware
